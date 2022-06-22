@@ -1,155 +1,159 @@
 <?php
-    class Commandes extends CI_Controller{
-        
-        public function index($offset = 0){
+class Commandes extends CI_Controller
+{
 
-            $config['base_url'] = base_url() . 'commandes/index/';
-            $config['total_rows'] = $this->db->count_all('lq_factures');
-            $config['per_page'] = 200;
-            $config['uri_segment'] = 3;
-            $config['attributes'] = array('class' => 'pagination-links');
+	public function index($offset = 0)
+	{
 
-            //Init Pagination
-            $this->pagination->initialize($config);
+		$config['base_url'] = base_url() . 'commandes/index/';
+		$config['total_rows'] = $this->db->count_all('lq_factures');
+		$config['per_page'] = 200;
+		$config['uri_segment'] = 3;
+		$config['attributes'] = array('class' => 'pagination-links');
 
-            $data['title']='Factures enregistrées';
-            $data['factures'] = $this->commande_model->get_commandes(FALSE, $config['per_page'], $offset);
+		//Init Pagination
+		$this->pagination->initialize($config);
 
-            $this->load->view('dashboards/header');
-            $this->load->view('factures/index', $data);
-            $this->load->view('dashboards/footer');
-        }
+		$data['title'] = 'Factures enregistrées';
+		$data['factures'] = $this->commande_model->get_commandes(FALSE, $config['per_page'], $offset);
 
-        public function create(){
+		$this->load->view('dashboards/header');
+		$this->load->view('factures/index', $data);
+		$this->load->view('dashboards/footer');
+	}
 
-            $this->load->library("cart");
+	public function create()
+	{
 
-            $client_token = substr(str_shuffle(str_repeat('123456789', mt_rand(5, 20))), 0, 5);
-            $fact_token = substr(str_shuffle(str_repeat('987654321', mt_rand(5, 20))), 0, 5);
+		$this->load->library("cart");
 
-            //var_dump($this->cart->contents()); die();
-            
-            if (!empty($this->cart->contents())) {
-                foreach ($this->cart->contents() as $items){
-                    
-                     $data = [
-                        'id_article' => $items["id"],
-                        'prix_achat' => $items["buy_price"],
-                        'prix_unitaire' => $items["unitprice"],
-                        'prix_vente' => $items["price"],
-                        'qte_achetee' => $items["qty"],
-                        'remise' => $items["remise"],
-                        'product_tva' => $items["tva"],
-                        'subtotal' =>$items["subtotal"],
-                        'fact_token' => $fact_token,
-                        'client_token' =>$client_token,
-                        'date_facture'=>date('Y-m-d')
-                    ];
+		$client_token = substr(str_shuffle(str_repeat('123456789', mt_rand(5, 20))), 0, 5);
+		$fact_token = substr(str_shuffle(str_repeat('987654321', mt_rand(5, 20))), 0, 5);
 
-                    $this->commande_model->create_commande($data);//Create command
+		//var_dump($this->cart->contents()); die();
 
-                    $data['solde'] = $this->commande_model->getSolde();
+		if (!empty($this->cart->contents())) {
+			foreach ($this->cart->contents() as $items) {
 
-                    $qty = $data['solde']['montant_entree'];
+				$data = [
+					'id_article' => $items["id"],
+					'prix_achat' => $items["buy_price"],
+					'prix_unitaire' => $items["unitprice"],
+					'prix_vente' => $items["price"],
+					'qte_achetee' => $items["qty"],
+					'remise' => $items["remise"],
+					'product_tva' => $items["tva"],
+					'subtotal' => $items["subtotal"],
+					'fact_token' => $fact_token,
+					'client_token' => $client_token,
+					'date_facture' => date('Y-m-d')
+				];
 
-                    $data_solde = ['montant_entree' => $items['subtotal'] + $qty];
-                    
-                    
-                    $this->commande_model->update_solde($data_solde);//Solde add data
-                 }
-                 redirect('shopping_cart/destroy_cart');
-                
-                }else{
-                    redirect(base_url('shopping_cart/index'));
-                }         
-            }
-        
+				$this->commande_model->create_commande($data); //Create command
 
-        public function delete($id){
-            $this->commande_model->delete_commande($id);
-            //Set Message
-            $this->session->set_flashdata('commande_deleted', 'La commande a été supprimée !');
-            redirect('commandes/index');
-        }
+				$data['solde'] = $this->commande_model->getSolde();
 
-        function factureDetail($fact_token){
+				$qty = $data['solde']['montant_entree'];
 
-            $data = [
-                'factures'=> $this->commande_model->factureDetails($fact_token),
-                'facture'=> $this->commande_model->factureDetail($fact_token)
-            ];
-            
-            $this->load->view('factures/fact_details', $data);
-            
-        }
+				$data_solde = ['montant_entree' => $items['subtotal'] + $qty];
 
-        function soldes(){
-            $request = $this->input->post('date_facture') ?? null;
 
-            $data = [
-                'solde'=>$this->commande_model->getSoldeStory($request),
-                'current' =>$this->commande_model->getSolde()
-            ];
+				$this->commande_model->update_solde($data_solde); //Solde add data
+			}
+			redirect('shopping_cart/destroy_cart');
+		} else {
+			redirect(base_url('shopping_cart/index'));
+		}
+	}
 
-            $this->load->view('dashboards/header');
-            $this->load->view('soldes/index', $data);
-            $this->load->view('dashboards/footer');
 
-        }
+	public function delete($id)
+	{
+		$this->commande_model->delete_commande($id);
+		//Set Message
+		$this->session->set_flashdata('commande_deleted', 'La commande a été supprimée !');
+		redirect('commandes/index');
+	}
 
-        function facturesByarticle(){
+	function factureDetail($fact_token)
+	{
 
-            $request = $this->input->post('date_facture') ?? date('Y-m-d');
+		$data = [
+			'factures' => $this->commande_model->factureDetails($fact_token),
+			'facture' => $this->commande_model->factureDetail($fact_token)
+		];
 
-            $data['factures'] = $this->commande_model->facturesByarticle($request);
+		$this->load->view('factures/fact_details', $data);
+	}
 
-            $this->load->view('dashboards/header');
-            $this->load->view('factures/list', $data);
-            $this->load->view('dashboards/footer');
-        }
+	function soldes()
+	{
+		$request = $this->input->post('date_facture') ?? null;
 
-        function retrieve(){
-            $data = ['current' =>$this->commande_model->getSolde()];
+		$data = [
+			'solde' => $this->commande_model->getSoldeStory($request),
+			'current' => $this->commande_model->getSolde()
+		];
 
-            $this->load->view('dashboards/header');
-            $this->load->view('soldes/retrieve', $data);
-            $this->load->view('dashboards/footer');
+		$this->load->view('dashboards/header');
+		$this->load->view('soldes/index', $data);
+		$this->load->view('dashboards/footer');
+	}
 
-        }
+	function facturesByarticle()
+	{
 
-        function saveRetrieve(){
+		$request = $this->input->post('date_facture') ?? date('Y-m-d');
 
-            $data['current'] = $this->commande_model->getSolde();
+		$data['factures'] = $this->commande_model->facturesByarticle($request);
 
-            $current_amount = $data['current']['montant_entree'];
+		$this->load->view('dashboards/header');
+		$this->load->view('factures/list', $data);
+		$this->load->view('dashboards/footer');
+	}
 
-            $amount_to_retrieve = $this->input->post('amount_retrieve');
+	function retrieve()
+	{
+		$data = ['current' => $this->commande_model->getSolde()];
 
-            $data_solde = ['montant_entree'=>$current_amount - $amount_to_retrieve];
+		$this->load->view('dashboards/header');
+		$this->load->view('soldes/retrieve', $data);
+		$this->load->view('dashboards/footer');
+	}
 
-            $this->commande_model->update_solde($data_solde);
+	function saveRetrieve()
+	{
 
-            $data = [
-                'preview_amount' => $current_amount,
-                'retrieve_amount' => $amount_to_retrieve,
-                'current_amount'=> $current_amount-$amount_to_retrieve,
-                'retrieve_date' =>$this->input->post('date_retrait'),
-                'motif'=>$this->input->post('motif_retrait')
-            ];   
+		$data['current'] = $this->commande_model->getSolde();
 
-            $this->commande_model->saveRetrieve($data);
+		$current_amount = $data['current']['montant_entree'];
 
-            $this->session->set_flashdata('success', 'Le retrait a été enregistré !');
-            redirect(base_url('commandes/soldes'));
+		$amount_to_retrieve = $this->input->post('amount_retrieve');
 
-        }
+		$data_solde = ['montant_entree' => $current_amount - $amount_to_retrieve];
 
-        function retrieveList(){
-            $data['retrieves'] = $this->commande_model->getRetrieve();
+		$this->commande_model->update_solde($data_solde);
 
-            $this->load->view('dashboards/header');
-            $this->load->view('soldes/retrievelist', $data);
-            $this->load->view('dashboards/footer');
-        }
+		$data = [
+			'preview_amount' => $current_amount,
+			'retrieve_amount' => $amount_to_retrieve,
+			'current_amount' => $current_amount - $amount_to_retrieve,
+			'retrieve_date' => $this->input->post('date_retrait'),
+			'motif' => $this->input->post('motif_retrait')
+		];
 
-    }
+		$this->commande_model->saveRetrieve($data);
+
+		$this->session->set_flashdata('success', 'Le retrait a été enregistré !');
+		redirect(base_url('commandes/soldes'));
+	}
+
+	function retrieveList()
+	{
+		$data['retrieves'] = $this->commande_model->getRetrieve();
+
+		$this->load->view('dashboards/header');
+		$this->load->view('soldes/retrievelist', $data);
+		$this->load->view('dashboards/footer');
+	}
+}

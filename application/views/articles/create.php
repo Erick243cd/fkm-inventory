@@ -33,11 +33,11 @@
                 </div>
             <div class="md-form">
                 <label for="">Prix d'achat</label>
-                <input type="number" class="form-control" name="prix_achat" required="required">
+                <input type="number" step="any" class="form-control" name="prix_achat" required="required">
             </div>
             <div class="md-form">
                 <label for="">Prix Unitaire</label>
-                <input type="number" class="form-control" name="prix_unitaire" required="required">
+                <input type="number" step="any" class="form-control" name="prix_unitaire" required="required">
             </div>
             <div class="md-form">
                 <select class="browser-default custom-select mdb-select" name="devise" required="required">
