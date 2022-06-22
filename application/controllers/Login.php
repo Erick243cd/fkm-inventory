@@ -5,7 +5,7 @@ class Login extends CI_Controller {
 
     public function index()
     {
-        if (date('Y-m-d')>='2022-05-20'){
+        if (date('Y-m-d')>='2023-05-20'){
             $this->session->set_flashdata('delay_expirate', "L'application nécessite des nouvelles mises à jour !");
             redirect('pages/connexion');
         }
