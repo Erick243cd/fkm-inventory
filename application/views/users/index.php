@@ -1,8 +1,5 @@
-
-
-<main class="pt-5 mx-lg-5">
+<main class="pt-5">
     <div class="container-fluid mt-5">
-
         <!-- Heading -->
         <div class="card mb-4 wow fadeIn">
 
@@ -34,7 +31,6 @@
                                width="100%">
                             <thead>
                             <tr>
-                                <th class="th-sm">#</th>
                                 <th class="th-sm">Nom</th>
                                 <th>Rôle</th>
                                 <th>Statut</th>
@@ -48,7 +44,6 @@
                             <tbody>
                                 <?php foreach ($users as $user):?>
                                     <tr>
-                                        <td></td>
                                         <td><?php echo ucfirst($user['user_name'])?></td>
                                         <td><?php echo ucfirst($user['role_utilisateur'])?></td>
                                         <td><?php echo ucfirst($user['statut'])?></td>

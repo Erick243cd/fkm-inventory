@@ -18,7 +18,7 @@
 
         <div class="col-lg-12 col-sm-12 col-md-8">
             <div class="card">
-                <div class="card-header text-center" style="background-color: #ffb502">
+                <div class="card-header text-center">
                     <a title="Editer votre compte" href="<?php echo base_url()?>users/edit/<?php echo $user['id']?>">
                         <img class="img-thumbnail" style="" src="<?php echo base_url()?>assets/img/users/<?php echo $user['user_image'] ?>" alt="" width="100" height="100">
                     </a>
@@ -27,7 +27,7 @@
                             <?php echo ucfirst($user['user_name'])?>
                         </h4>
                     </a>
-                    <p class="text-white"><?php echo ucfirst($user['role_utilisateur'])?></p>
+                    <p class="blue-text"><?php echo ucfirst($user['role_utilisateur'])?></p>
                 </div>
             </div>
         </div>

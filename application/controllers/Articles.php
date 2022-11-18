@@ -29,23 +29,25 @@ class Articles extends CI_Controller
 			if (isset($_FILES["articlefile"]["name"])) {
 
 				$config['upload_path'] = './assets/img/articles';
-				$config['allowed_types'] = 'jpg|png|gif';
+				$config['allowed_types'] = 'jpg|jpeg|png|webp';
+				$config['encrypt_name'] = TRUE;
 
 				$this->load->library('upload', $config);
+
 				if (!$this->upload->do_upload('articlefile')) {
-					$file = 'no_file';
+
+					$error = array('error' => $this->upload->display_errors());
+					echo $error;
 				} else {
-					$string = $_FILES["articlefile"]["name"];
-					$pattern = '# #';
-					$replacement = "_";
-					$data = $this->upload->data();
-					$file = preg_replace($pattern, $replacement, $string);
+
+					$data = (object) $this->upload->data();
+
+					$this->article_model->create_article($data->file_name);
+					//Set_messages
+					$this->session->set_flashdata('article_created', 'L\'article a bien été créé avec succès!');
+					redirect('articles');
 				}
 			}
-			$this->article_model->create_article($file);
-			//Set_messages
-			$this->session->set_flashdata('article_created', 'L\'article a bien été créé avec succès!');
-			redirect('articles');
 		}
 	}
 	public function edit($id)

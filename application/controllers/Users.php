@@ -16,7 +16,7 @@ class Users extends CI_Controller
 		$data['title'] = 'Nouvel utilisateur';
 
 		//Validation de formulaire
-		$this->form_validation->set_rules('username', 'Nom utilisateur', 'required');
+		$this->form_validation->set_rules('username', 'Nom utilisateur', 'required|is_unique[lq_users.user_name]');
 		$this->form_validation->set_rules('role_user', 'Role utilisateur', 'required');
 
 		if ($this->form_validation->run() === FALSE) {
@@ -68,6 +68,7 @@ class Users extends CI_Controller
 	}
 	public function update()
 	{
+
 		//Upload Image
 		$config['upload_path'] = './assets/img/users';
 		$config['allowed_types'] = 'gif|jpg|png';

@@ -23,12 +23,13 @@ class Shopping_cart extends CI_Controller
 			"name" => $_POST['product_name'],
 			"qty" => $_POST['quantity'],
 			"price" => $_POST['product_price'],
-			"unitprice" => $_POST['product_unitprice'],
-			"remise" => $_POST['product_unitprice'] - $_POST['product_price'],
+			"unit_price" => $_POST['product_unit_price'],
 			"buy_price" => $_POST['product_price_buy'],
-			"benefic" => $_POST['product_price'] - $_POST['product_price_buy'],
-			"tva" => $tva
+			//"benefic" => $_POST['product_price'] - $_POST['product_price_buy'],
+			"tva" => $tva,
+			"subtotal" => $_POST['product_unit_price'] * $_POST['quantity']
 		);
+
 		$this->cart->insert($data); //Return rowid
 		echo $this->cardview();
 	}
@@ -56,6 +57,7 @@ class Shopping_cart extends CI_Controller
 		$this->cart->destroy();
 		echo $this->cardview();
 	}
+
 	function destroy_cart()
 	{
 		$this->load->library("cart");
@@ -71,10 +73,9 @@ class Shopping_cart extends CI_Controller
 		$tva = 0;
 		$output = '';
 		$output .= '
-        <h4 class="text-center">Facture</h4>
           
                 <div align="right">
-                    <button type="button" id="clear_cart" class="btn btn-warning">Vider la facture</button>
+                    <button type="button" id="clear_cart" class="btn btn-outline-danger btn-sm">Vider la facture</button>
                 </div>
                 <div class="my-3 p-3 bg-white rounded shadow-sm">    
             ';
@@ -113,14 +114,8 @@ class Shopping_cart extends CI_Controller
                                     </div>
                                     <span class="d-block"> $ ' . number_format($items["subtotal"], 2, ',', '') . '</span>
                                 </div>
-                                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                    <div class="d-flex justify-content-between align-items-center w-100">
-                                        <strong class="text-gray-dark">TVA(' . $tva . '%)</strong>
-                                    </div>
-                                    <span class="d-block"> $ ' . number_format($items["subtotal"] * $tva / 100, 2, ',', '') . '</span>
-                                    
-                                </div>
-                                <button type="button" name="remove" class="btn btn-link remove_inventory" id="' . $items["rowid"] . '">Retirer</button>
+                       
+                                <button type="button" name="remove" class="text-danger btn btn-link remove_inventory" id="' . $items["rowid"] . '">Retirer</button>
                             </div>                  
                 ';
 			if ($count <= 0) {
@@ -130,10 +125,7 @@ class Shopping_cart extends CI_Controller
 
 
 		$output .= '
-        
-                        <strong class="d-block text-right text-danger mt-3">
-                        
-                       
+        <strong class="d-block text-right text-danger mt-3">
                             <a href="#">Sous-total avec TVA </a>  <p> $ ' . number_format($this->cart->total() + $total, 2, ',', '') . '</p>
                         </strong>
                  </div>

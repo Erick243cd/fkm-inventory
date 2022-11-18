@@ -24,7 +24,7 @@ class User_model extends CI_Model{
     }
     public function update_user($user_image){
         $password = $this->input->post('password');
-        if(empty($password)){
+        if(!isset($password)){
             $data = array(
                 'user_name'=>$this->input->post('username'),
                 'user_image'=>$user_image
@@ -44,8 +44,9 @@ class User_model extends CI_Model{
         $data = array(
             'user_name'=>$this->input->post('username'),
             'role_utilisateur'=>$this->input->post('role_user'),
-            'password'=>password_hash('123456789', PASSWORD_BCRYPT),
-            'user_image'=>'noimage_user.png'
+            'password'=>password_hash('@12345', PASSWORD_BCRYPT),
+            'user_image'=>'noimage_user.png',
+			'shop_id'=>1
         );
         return $this->db->insert('lq_users', $data);
     

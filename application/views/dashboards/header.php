@@ -1,164 +1,250 @@
 <?php
-$session_data= $this->session->userdata('logged_in');
+$session_data = $this->session->userdata('logged_in');
 $data['id'] = $session_data['id'];
 $data['user_name'] = $session_data['user_name'];
 $data['role_utilisateur'] = $session_data['role_utilisateur'];
 $data['user_image'] = $session_data['user_image'];
-if(empty($data['id'])){
-    redirect(base_url('pages/connexion'));
+if (empty($data['id'])) {
+	redirect(base_url('pages/connexion'));
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Billing & Stock Manager | by Afrinewsoft</title>
-    <!-- Font Awesome -->
-    <link href="<?php echo base_url()?>assets/dashboards/css/all.css" rel="stylesheet">
-	<link href="<?php echo base_url()?>assets/img/officedatabase_104402.ico" rel="icon" type="image/ico">
-    <!-- Bootstrap core CSS -->
-    <link href="<?php echo base_url()?>assets/dashboards/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="<?php echo base_url()?>assets/dashboards/css/mdb.min.css" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="<?php echo base_url()?>assets/dashboards/css/style.min.css" rel="stylesheet">
-    <link href="<?php echo base_url()?>assets/dashboards/css/personalize.css" rel="stylesheet">
-    <!-- DataTables -->
-    <link href="<?php echo base_url()?>assets/dashboards/css/addons/datatables.min.css" rel="stylesheet">
-    <link href="<?php echo base_url()?>assets/dashboards/css/addons/datatables-select.min.css" rel="stylesheet">
-    <style type="text/css">
-        @media print{
-            .not-print{
-                display:none;
-            }
-        }
-    </style>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta desciption="Application de gestion de stock et facturation">
+	<title>Gestion de stock et facturation | by Afrinewsoft</title>
+	<link href="<?php echo base_url() ?>assets/img/favicon.png" rel="icon" type="image/png">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/dashboards/css/all.css">
+	<!-- Bootstrap core CSS -->
+	<link href="<?= base_url() ?>assets/dashboards/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="<?= base_url() ?>assets/dashboards/css/mdb.min.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/dashboards/css/sidebar.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/dashboards/css/myStyle.css" rel="stylesheet">
+
+	<!-- Your custom styles (optional) -->
+	<link href="<?= base_url() ?>assets/dashboards/css/style.min.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/dashboards/css/addons/datatables.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/dashboards/css/addons/datatables-select.css" rel="stylesheet">
+	<!-- Select2 -->
+	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/select2/css/select2.min.css">
+	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+	<link href="<?php echo base_url() ?>assets/dashboards/css/addons/datatables-select.css" rel="stylesheet">
+	<style type="text/css">
+		@media print {
+			.not-print {
+				display: none;
+			}
+		}
+	</style>
 </head>
 
-<body class="grey lighten-3">
-
+<body class="grey lighten-3 app sidebar-mini rtl">
 <!--Main Navigation-->
 <header>
-    <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark purple-gradient scrolling-navbar">
-        <div class="container-fluid">
-
-            <!-- Brand -->
-            <a class="navbar-brand waves-effect" href="<?php echo base_url()?>pages/dashboards">
-                <strong class="white-text">STOCK APP</strong>
-            </a>
-
-            <!-- Collapse -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Links -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left -->
-                <ul class="navbar-nav mr-auto">
-                    
-                </ul>
-
-                <!-- Right -->
-                <ul class="navbar-nav nav-flex-icons">
-                    <li class="nav-item">
-                        <a href="<?php echo base_url()?>users/edit/<?php echo $data['id']?>" class="nav-link border border-light rounded waves-effect">
-                            <i class="fa fas-user mr-2"></i><?php echo ucfirst($data['user_name']);?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a onclick="return confirm('Êtes-vous sûr de vous déconnecter ?');" href="<?php echo base_url()?>pages/logout" class="nav-link border border-light rounded waves-effect">
-                            <i class="fas fa-lock mr-2"></i>Se Déconnecter
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- Navbar -->
+	<!-- Navbar -->
+	<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar app-header">
+		<div class="container-fluid">
+			<!-- Brand -->
+			<a class="navbar-brand waves-effect" href="<?php echo base_url() ?>pages/dashboards">
+				<strong class="pink-ic">AFRINEWSOFT</strong>
+			</a>
+			<a class="navbar-toggler" type="button" data-toggle="sidebar" href="" aria-label="Hide Sidebar">
+				<!-- Collapse -->
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</a>
+			<!-- Collapse -->
 
 
+			<!-- Links -->
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<!-- Left -->
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link waves-effect rgba-pink-strong" href="<?= base_url() ?>pages/dashboards">Accueil
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+				</ul>
+				<!-- Right -->
+				<ul class="navbar-nav nav-flex-icons">
+					<li class="nav-item nav-link">
+						<a href="#" class="fa fa-seedling pink-text"></a>
+					</li>
+					<li class="nav-item">
+						<a onclick="return confirm('Êtes-vous sûr de vous déconnecter ?');"
+						   href="<?= base_url() ?>pages/logout"
+						   class="nav-link fa fa-lock border border-light rounded waves-effect">
 
-    <!-- Sidebar -->
-    <div class="sidebar-fixed position-fixed">
-    
-        <div class="list-group list-group-flush mt-5">
-            <a href="<?php echo base_url()?>pages/dashboards" class="list-group-item active waves-effect">
-                <i class="fas fa-chart-pie mr-3"></i>Dashboard
-            </a>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- Navbar -->
 
-            <?php if ($data['role_utilisateur'] == 'admin'):?>
-                <a href="<?php echo base_url()?>articles/index" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-calculator mr-3 text-danger"></i>Articles</a>
+	<!-- Sidebar -->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	<div class="app-sidebar position-fixed pl-2 pr-2 " style="font-size: small">
+		<div class="list-group list-group-flush mt-2">
+			<a href="#" class="list-group-item active  waves-effect"
+			   style="background-color: deeppink; border-color: hotpink">
+				<i class="fas fa-chart-pie mr-3"></i>Dashboard
+			</a>
 
-                <a href="<?php echo base_url()?>sorties" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-cannabis mr-3 text-info"></i>Sorties</a>
+			<div class="has-streeview mt-4" style="font-size: small">
+				<a href="#" class="list-group-item  waves-effect" data-toggle="collapse" data-target="#students">
+					<i class="fa fa-money-bill-alt mr-3 blue-text mr-3"></i>Facturation<i
+							class="fa fa-chevron-right text-muted ml-3"></i>
+				</a>
+				<ul class="nav nav-treeview collapse" id="students">
+					<li class="nav-item">
+						<a href="<?= base_url() ?>shopping_cart"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-cash-register green-text mr-3  ml-3"></i>Nouvelle facture</a>
+					</li>
+					<li class="nav-item">
+						<a href="<?= base_url() ?>commandes"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-list red-text mr-3  ml-3"></i>Liste des factures</a>
+					</li>
+					<li class="nav-item">
+						<a href="<?= base_url() ?>commandes/facturesByarticle"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-balance-scale-right blue-text mr-3  ml-3"></i>Ventes</a>
+					</li>
+				</ul>
+			</div>
 
-                <a href="<?php echo base_url()?>articles/entreelist" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-chart-bar mr-3 pink-text"></i>Entrée</a>
+			<div class="has-streeview mt-1" style="font-size: small">
+				<a href="#" class="list-group-item  waves-effect" data-toggle="collapse" data-target="#perception">
+					<i class="fa fa-server mr-3 text-danger mr-3"></i>Stock<i
+							class="fa fa-chevron-right text-muted ml-3"></i>
+				</a>
+				<ul class="nav nav-treeview collapse" id="perception">
+					<li class="nav-item">
+						<a href="<?= base_url() ?>articles/entreelist"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-plus green-text mr-3  ml-3"></i>Liste d'entrées</a>
+					</li>
+					<li class="nav-item">
+						<a href="<?= base_url() ?>sorties"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fas fa-outdent mr-3 red-text ml-3"></i> Liste de sorties</a>
+					</li>
+					<li class="nav-item">
+						<a href="<?= base_url() ?>articles/inventaire"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fas fa-list-alt mr-3 blue-text ml-3"></i>Compte</a>
+					</li>
+				</ul>
+			</div>
+			<div class="has-streeview mt-1" style="font-size: small">
+				<a href="#" class="list-group-item  waves-effect" data-toggle="collapse" data-target="#inventory">
+					<i class="fa fa-file-invoice-dollar mr-3 text-default mr-3"></i>Articles<i
+							class="fa fa-chevron-right text-muted ml-3"></i>
+				</a>
+				<ul class="nav nav-treeview collapse" id="inventory">
+					<li class="nav-item">
+						<a href="<?= base_url() ?>articles/create"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-file-invoice red-text mr-3  ml-3"></i>Nouvel article</a>
+					</li>
 
-                <a href="<?php echo base_url()?>commandes/facturesByarticle" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-database mr-3 red-text"></i>Ventes</a>
+					<li class="nav-item">
+						<a href="<?= base_url() ?>articles/index"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-file-invoice blue-text mr-3  ml-3"></i>Liste d'articles</a>
+					</li>
+				</ul>
+			</div>
 
-                 <a href="<?php echo base_url()?>articles/inventaire" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-database mr-3 blue-text"></i>Stock</a>
+			<div class="has-streeview mt-1" style="font-size: small">
+				<a href="#" class="list-group-item  waves-effect" data-toggle="collapse" data-target="#expenses">
+					<i class="fa fa-money-bill mr-3 blue-text mr-3"></i>Compte<i
+							class="fa fa-chevron-right text-muted ml-3"></i>
+				</a>
+				<ul class="nav nav-treeview collapse" id="expenses" style="font-size: small">
+					<li class="nav-item">
+						<a href="<?= base_url() ?>commandes/soldes"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-list-alt green-text  mr-3 ml-3"></i>Solde</a>
+					</li>
 
-                <a href="<?php echo base_url()?>commandes/soldes" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-money-bill-alt mr-3 green-text"></i>Soldes</a>
+					<li class="nav-item">
+						<a href="<?= base_url() ?>commandes/retrieveList"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-list-alt blue-text mr-3 ml-3"></i>Liste de depenses</a>
+					</li>
 
-                <a href="<?php echo base_url()?>commandes/retrieveList" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-chart-pie mr-3 red-text"></i>Dépenses</a>
+				</ul>
+			</div>
 
+			<div class="has-streeview mt-1" style="font-size: small">
 
-                <a href="<?php echo base_url()?>users" class="list-group-item list-group-item-action waves-effect">
-                <i class="fas fa-user-alt-slash mr-3 text-success"></i>Utilisateurs</a>
-                
-                <?php elseif ($data['role_utilisateur'] === 'billing'): ?>
+				<a href="#" class="list-group-item  waves-effect" data-toggle="collapse" data-target="#database">
+					<i class="fa fa-database mr-3 text-danger mr-3"></i>Database<i
+							class="fa fa-chevron-right text-muted ml-3"></i>
+				</a>
 
-                    <a href="<?php echo base_url()?>shopping_cart" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-money-bill-alt mr-3 green-text"></i>Facturation</a> 
+				<ul class="nav nav-treeview collapse" id="database">
+					<li class="nav-item">
+						<button id="updateDB" class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-upload green-text  mr-3 ml-3"></i>Sauvegarder
+						</button>
+					</li>
+				</ul>
+			</div>
+			<div class="has-streeview mt-1" style="font-size: small">
+				<a href="#" class="list-group-item  waves-effect" data-toggle="collapse" data-target="#configurations">
+					<i class="fa fa-cogs Nmr-3 text-muted mr-3"></i>Configurations<i
+							class="fa fa-chevron-right text-muted ml-3"></i>
+				</a>
+				<ul class="nav nav-treeview collapse" id="configurations" style="font-size: small">
+					<?php if ($data['role_utilisateur'] == 'admin') : ?>
+						<li class="nav-item">
+							<a href="#" data-toggle="modal" data-target="#centralModalLGInfoDemo1"
+							   class="list-group-item list-group-item-action waves-effect">
+								<i class="fa fa-cog mr-3 ml-3  blue-text mr-3"></i>Système</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url() ?>users"
+							   class="list-group-item list-group-item-action waves-effect">
+								<i class="fa fa-users green-text mr-3  ml-3"></i>Utilisateurs</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url() ?>categories"
+							   class="list-group-item list-group-item-action waves-effect">
+								<i class="fa fa-object-group red-text  mr-3  ml-3"></i>Catégories</a>
+						</li>
+					<?php endif ?>
 
-                    <a href="<?php echo base_url()?>commandes" class="list-group-item list-group-item-action waves-effect">
-
-                    <i class="fas fa-database mr-3 red-text"></i>Invoices</a>
-                     <a href="<?php echo base_url()?>commandes/facturesByarticle" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-chart-bar mr-3 blue-text"></i>Ventes</a>
-
-                    <a href="<?php echo base_url()?>commandes/soldes" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-money-bill-alt mr-3 green-text"></i>Soldes</a> 
-
-                <?php elseif ($data['role_utilisateur'] === 'stock'): ?>
-                    <a href="<?php echo base_url()?>articles/index" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-calculator mr-3 text-danger"></i>Articles</a>
-
-                    <a href="<?php echo base_url()?>sorties" class="list-group-item list-group-item-action waves-effect">
-                        <i class="fas fa-cannabis mr-3 text-info"></i>Sorties</a>
-
-                    <a href="<?php echo base_url()?>articles/entreelist" class="list-group-item list-group-item-action waves-effect">
-                        <i class="fas fa-chart-bar mr-3 pink-text"></i>Entrée</a>
-
-                    <a href="<?php echo base_url()?>articles/inventaire" class="list-group-item list-group-item-action waves-effect">
-                    <i class="fas fa-database mr-3 red-text"></i>Stock</a>
-                <?php endif;?>
-
-            <a href="<?php echo base_url()?>users/view_membre" class="list-group-item list-group-item-action waves-effect">
-                <i class="fas fa-user mr-3"></i>Mon compte</a>
-        </div>
-
-    </div>
-    <!-- Sidebar -->
+					<li class="nav-item">
+						<a href="<?= base_url() ?>users/view_membre"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-user-check yellow-text mr-3"></i>Mon compte</a>
+					</li>
+					<li class="nav-item mb-4">
+						<a onclick="return confirm('Etes-vous sûr de vous déconnecter ?');"
+						   href="<?= base_url('pages/logout') ?>"
+						   class="list-group-item list-group-item-action waves-effect">
+							<i class="fa fa-user-times pink-text  mr-3"></i>Déconnexion</a>
+					</li>
+					<li class="nav-item"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </header>
-<?php if($this->session->flashdata('message')):?>
-    <?php echo '<p class="alert alert-success">'.$this->session->flashdata('message').'</p>';?>
-<?php endif;?>
-<?php if($this->session->flashdata('post_updated')):?>
-    <?php echo '<p class="alert alert-success">'.$this->session->flashdata('post_updated').'</p>';?>
-<?php endif;?>
-<?php if($this->session->flashdata('post_deleted')):?>
-    <?php echo '<p class="alert alert-success">'.$this->session->flashdata('post_deleted').'</p>';?>
-<?php endif;?>
 

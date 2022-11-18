@@ -2,8 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link href="<?php echo base_url()?>assets/img/officedatabase_104402.ico" rel="icon" type="image/ico">
-    <title><?= $title ?? ""?></title>
+    <link href="<?php echo base_url()?>assets/img/favicon.png" rel="icon" type="image/png">
+    <title><?= $title ?? "Facture n°". $facture['fact_token'] ?></title>
       <?php 
         $total = null; 
       ?>
@@ -110,7 +110,7 @@
             <table>
               <tr>
                 <td class="title">
-                  <img src="<?php echo base_url()?>assets/img/logo.jpg" alt="Logo" style="width: 100%; max-width: 200px; border-radius: 10px;" />
+                  <img src="<?php echo base_url()?>assets/img/favicon.png" alt="Logo" style="width: 100px; max-width: 200px; border-radius: 10px;" />
                 </td>
 
                 <td>
@@ -128,12 +128,12 @@
             <table>
               <tr>
                 <td>
-                  Destin Service <br />
-                  243, Route Likasi<br />
-                  Kolwezi, RD Congo
+                  Nom de l'établissement<br />
+                  Adresse complete<br />
+                  Ville, RD Congo
                 </td>
                 <td>Client: <br/>
-                  <?= $facture["client_token"]?><br />
+                  <?= $facture['client_name'] ?? $facture["client_token"]?><br />
                 </td>
               </tr>
             </table>
@@ -146,8 +146,8 @@
         </tr>
 
         <tr class="details">
-          <td>Cash</td>
-          <td>Cash</td>
+          <td>Reglement</td>
+          <td><?= $facture['is_cash']==1 ? "Payée en Cash" : "Non reglée"?></td>
         </tr>
 
         <tr class="heading">

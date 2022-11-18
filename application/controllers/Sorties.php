@@ -21,9 +21,12 @@ class Sorties extends CI_Controller
 
 	function sortie($id)
 	{
-		$data['categories'] = $this->categorie_model->fetch();
-		$data['article'] = $this->article_model->get_article_id($id);
-		$data['title'] = 'Enregistrer la sortie de l\'article';
+		$data = [
+			'categories' => $this->categorie_model->fetch(),
+			'article' => $this->article_model->get_article_id($id),
+			'title' => 'Enregistrer la sortie de l\'article',
+			'shops' => $this->categorie_model->getShops()
+		];
 
 		$this->load->view('dashboards/header');
 		$this->load->view('sorties/sortie', $data);
@@ -32,7 +35,6 @@ class Sorties extends CI_Controller
 
 	function save()
 	{
-
 		$quantite_initiale = $this->input->post('qte_initial');
 		$quantite_sortie = $this->input->post('qte_sortie');
 
