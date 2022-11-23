@@ -33,8 +33,6 @@
                <div class="md-form">
                    <select class="browser-default custom-select mdb-select" name="devise" required="required">
                        <option value="<?= $article['devise'] ?>" selected><?= $article['devise'] ?></option>
-                       <option value="USD">USD</option>
-                       <option value="CDF">CDF</option>
                    </select>
                </div>
                <div class="md-form">

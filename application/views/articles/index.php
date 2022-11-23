@@ -33,7 +33,7 @@
 					<div class="card-body">
 						<a style="float: right" class="btn btn-success btn-sm"
 						   href="<?php echo base_url() ?>articles/create">Ajouter</a>
-						<table id="dt-material-checkbox" class="table table-hover" cellspacing="5">
+						<table id="dt-material-checkbox" class="table table-hover">
 							<thead class="blue-grey lighten-4">
 							<tr>
 								<th class="th-sm">Image</th>
@@ -65,11 +65,11 @@
 										   class="btn-sm btn-outline-info">Sortie</a>
 
 										<a href="<?php echo base_url() ?>articles/edit/<?= $row->id_article ?>"
-										   class="btn-sm btn-outline-purple">Editer</a>
+										   class="btn-sm btn-outline-purple"><i class="fa fa-edit"></i></a>
 
 										<a onclick="return confirm('Etes-vous sûr de supprimer cette commande ?');"
 										   class="btn-sm btn-outline-danger"
-										   href="<?php echo base_url() ?>articles/delete/<?= $row->id_article ?>">Supprimer</a>
+										   href="<?php echo base_url() ?>articles/delete/<?= $row->id_article ?>"><i class="fa fa-trash-alt"></i></a>
 									</td>
 								</tr>
 							<?php endforeach; ?>

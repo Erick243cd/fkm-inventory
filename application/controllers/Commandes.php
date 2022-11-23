@@ -128,18 +128,21 @@ class Commandes extends CI_Controller
 		$this->cart->destroy();
 		$this->session->set_flashdata('succsess', 'Facture enregitrée!');
 
-		$this->load->view('factures/fact_details', $data);
+		$this->load->view('factures/fact_more', $data);
 	}
 
 	function soldes()
 	{
-		$request = $this->input->post('date_facture') ?? null;
+		$request = $this->input->post('date_facture');
 
 		$usd_amount = 0;
 		$cdf_amount = 0;
 		$remise_amount = 0;
 		$subtotal = 0;
+
 		$soldes = $this->commande_model->getSoldeStory($request);
+
+
 		if (!empty($soldes)) {
 			foreach ($soldes as $solde) {
 				$usd_amount += $solde->usd_amount;

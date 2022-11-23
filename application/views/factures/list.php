@@ -5,7 +5,6 @@
 <?= form_open("commandes/facturesByarticle")?>
         <div class="card mb-4 wow fadeIn not-print">
             <div class="card-body d-lg-flex">
-                
                 <div class="row" style="width: 100%; height: initial;">
                     <div class="col-sm-6 text-center content-center">
                      <input type="date" name="date_facture" class="form-control" style="size: 20px;" required>

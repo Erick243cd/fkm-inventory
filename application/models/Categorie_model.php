@@ -12,9 +12,10 @@ class Categorie_model extends CI_Model
 	{
 		$this->load->database();
 	}
+
 	function fetch()
 	{
-		$this->db->order_by('id_categorie', 'DESC');
+		$this->db->order_by('id_categorie', 'ASC');
 		$query = $this->db->get_where('lq_categories', array('deleted' => 'not'));
 		return $query->result();
 	}
@@ -23,5 +24,28 @@ class Categorie_model extends CI_Model
 	{
 		$this->db->order_by('shop_id', 'DESC');
 		return $this->db->get('lq_shops')->result();
+	}
+
+	public function getCategory($categoryId)
+	{
+		return $this->db->get_where('lq_categories', array('id_categorie' => $categoryId))->row();
+	}
+
+	public function create($data)
+	{
+		return $this->db->insert('lq_categories', $data);
+	}
+
+	public function update($categoryId, $data)
+	{
+		$this->db->where('id_categorie', $categoryId);
+		return $this->db->update('lq_categories', $data);
+	}
+
+	public function delete($categoryId)
+	{
+		$this->db->where('id_categorie', $categoryId);
+		$data = array('deleted' => 'yes');
+		return $this->db->update('lq_categories', $data);
 	}
 }

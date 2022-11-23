@@ -96,15 +96,15 @@
 							<div class="d-md-flex justify-content-center my-1 ml-3 mr-3 mt-0">
 								<div class="form-group ">
 									<label for="usd_amount">Réduction </label>
-									<input type="number" class="form-control" name="amount_reduction" step="any">
+									<input type="number" class="form-control" name="amount_reduction" step="any" value="0">
 								</div>
 								<div class="form-group">
 									<label for="usd_amount">Montant USD</label>
-									<input type="number" class="form-control" name="usd_amount" step="any">
+									<input type="number" class="form-control" name="usd_amount" step="any" value="0" required>
 								</div>
 								<div class="form-group">
 									<label for="cdf_amount">Montant CDF</label>
-									<input type="number" class="form-control" name="cdf_amount" step="any">
+									<input type="number" class="form-control" name="cdf_amount" step="any" value="0" required>
 								</div>
 								<div class="form-group">
 									<label for="cdf_amount">Nom du client</label>
@@ -127,13 +127,9 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
-
 		<!--Grid row-->
 		<div class="pt-4 mb-5"></div>
 		<div class="pt-3 mb-2"></div>
-
-
 	</div>
 </main><!--Main layout-->

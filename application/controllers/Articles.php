@@ -1,4 +1,5 @@
 <?php
+
 class Articles extends CI_Controller
 {
 	public function index($offset = 0)
@@ -11,6 +12,7 @@ class Articles extends CI_Controller
 		$this->load->view('articles/index', $data);
 		$this->load->view('dashboards/footer');
 	}
+
 	public function create()
 	{
 		$data['title'] = 'Nouvel article';
@@ -31,25 +33,22 @@ class Articles extends CI_Controller
 				$config['upload_path'] = './assets/img/articles';
 				$config['allowed_types'] = 'jpg|jpeg|png|webp';
 				$config['encrypt_name'] = TRUE;
-
 				$this->load->library('upload', $config);
 
 				if (!$this->upload->do_upload('articlefile')) {
-
 					$error = array('error' => $this->upload->display_errors());
-					echo $error;
+					//print_r($error) ;
 				} else {
-
-					$data = (object) $this->upload->data();
-
-					$this->article_model->create_article($data->file_name);
-					//Set_messages
-					$this->session->set_flashdata('article_created', 'L\'article a bien été créé avec succès!');
-					redirect('articles');
+					$data = (object)$this->upload->data();
 				}
 			}
+			$this->article_model->create_article($data->file_name ?? 'product_image.png');
+			//Set_messages
+			$this->session->set_flashdata('article_created', 'L\'article a bien été créé avec succès!');
+			redirect('articles');
 		}
 	}
+
 	public function edit($id)
 	{
 		$data['categories'] = $this->categorie_model->fetch();
@@ -61,6 +60,7 @@ class Articles extends CI_Controller
 		$this->load->view('articles/edit', $data);
 		$this->load->view('dashboards/footer');
 	}
+
 	public function update()
 	{
 		$data = array(
@@ -76,6 +76,7 @@ class Articles extends CI_Controller
 		$this->session->set_flashdata('article_updated', 'Le produit a été modifié !');
 		redirect('articles');
 	}
+
 	public function delete($id)
 	{
 		$this->article_model->delete_article($id);
@@ -94,6 +95,7 @@ class Articles extends CI_Controller
 		$this->load->view('entrees/entree', $data);
 		$this->load->view('dashboards/footer');
 	}
+
 	function reapprovisionner()
 	{
 
@@ -125,6 +127,7 @@ class Articles extends CI_Controller
 		$this->session->set_flashdata('reapro_save', 'Le reapprovisonnement de l\'article a été bien enregistré !');
 		redirect('articles/entreelist');
 	}
+
 	function entreelist()
 	{
 		$data['title'] = "Reapprovisionnements";

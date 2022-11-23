@@ -1,6 +1,9 @@
 <div class="container mt-5 text-right not-print">
 	<p>&copy Afrinewsoft, Tous droits reservés</p>
-	<p><i class="fas fa-phone mr-1"></i> +243 992 689 105</p>
+	<p><i class="fas fa-phone mr-1"></i> +243 992 689 105 <br>
+		<i class="fas fa-mail-bulk mr-1"></i> contact@afrinewsoft.com <br>
+		<i class="fas fa-weebly mr-1"></i><a href="https://afrinewsoft.com" target="_blank">www.afrinewsoft.com</a> <br>
+	</p>
 </div>
 <!-- SCRIPTS -->
 <!-- JQuery -->

@@ -128,9 +128,9 @@
             <table>
               <tr>
                 <td>
-                  Nom de l'établissement<br />
+                 KAZIC COMPANY SARL<br />
                   Adresse complete<br />
-                  Ville, RD Congo
+                  Lubumbashi, RD Congo
                 </td>
                 <td>Client: <br/>
                   <?= $facture['client_name'] ?? $facture["client_token"]?><br />
@@ -142,7 +142,7 @@
 
         <tr class="heading">
           <td>Méthode de Paiement</td>
-          <td>#</td>
+          <td style="float: right">#Paiement</td>
         </tr>
 
         <tr class="details">
@@ -151,23 +151,27 @@
         </tr>
 
         <tr class="heading">
-          <td>Articles</td>
-          <td>Prix</td>
+          <td>Designation</td>
+          <td>Qté</td>
+          <td>P.U</td>
+          <td>Total</td>
         </tr>
         <?php foreach ($factures as $row): ?>
           <?php 
               $total += $row->subtotal;
            ?>
          <tr class="item">
-            <td><?= $row->designation?> (<?= $row->qte_achetee?>) <?= ($row->qte_achetee >1) ? "pcs":"pc"?></td>
-            <td>$<?= number_format($row->subtotal, 2, '.', '')?></td>
+            <td><?= $row->designation?></td>
+            <td>(<?= $row->qte_achetee?>) <?= ($row->qte_achetee >1) ? "pcs":"pc"?></td>
+            <td>CDF<?= number_format($row->prix_unitaire, 2, '.', '')?></td>
+            <td>CDF<?= number_format($row->subtotal, 2, '.', '')?></td>
          </tr>
         <?php endforeach ?>
 
         <tr class="total">
           <td></td>
 
-          <td>Total: $<?= number_format($total, 2, '.', '')?></td>
+          <td style="float: right; margin-left: 50%">Sous-total: CDF<?= number_format($total, 2, '.', '')?></td>
         </tr>
       </table>
     </div>

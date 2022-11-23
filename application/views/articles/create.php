@@ -1,19 +1,15 @@
 <main class="pt-5 mx-lg-5">
 	<div class="container-fluid mt-5">
-
 		<!-- Heading -->
 		<div class="card mb-4 wow fadeIn">
-
 			<!--Card content-->
 			<div class="card-body d-sm-flex justify-content-between">
-
 				<h4 class="mb-2 mb-sm-0 pt-1">
 					<a href="<?php echo base_url() ?>pages/dashboards" target="_blank">Page d'accueil</a>
 					<span>/</span>
 					<span><?php echo $title; ?></span>
 				</h4>
 			</div>
-
 		</div>
 		<div class="card fadeIn mb-4">
 			<?php echo validation_errors(); ?>
@@ -28,7 +24,8 @@
 					</div>
 					<div class="col-md-6 col-sm-6">
 						<div class="md-form">
-							<select class="browser-default custom-select mdb-select" name="id_categorie" required="required">
+							<select class="browser-default custom-select mdb-select" name="id_categorie"
+									required="required">
 								<option value="" disabled selected>Catégorie</option>
 								<?php foreach ($categories as $row) : ?>
 									<option value="<?= $row->id_categorie; ?>"><?= $row->nom_categorie; ?></option>
@@ -36,24 +33,23 @@
 							</select>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-4">
-						<div class="md-form">
-							<label for="">Prix d'achat</label>
-							<input type="number" step="any" class="form-control" name="prix_achat" required="required">
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-4">
+
+					<input type="hidden" step="any" class="form-control" name="prix_achat" required="required"
+						   value="0">
+
+					<div class="col-md-6 col-sm-6">
 						<div class="md-form">
 							<label for="">Prix Unitaire</label>
-							<input type="number" step="any" class="form-control" name="prix_unitaire" required="required">
+							<input type="number" step="any" class="form-control" name="prix_unitaire"
+								   required="required">
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-4">
+					<div class="col-md-6 col-sm-6">
 						<div class="md-form">
 							<select class="browser-default custom-select mdb-select" name="devise" required="required">
 								<option value="" disabled selected>Devise</option>
-								<option value="USD">USD</option>
-								<option value="CDF">CDF</option>
+<!--								<option value="CDF" selected>CDF</option>-->
+								<option value="USD" selected>USD</option>
 							</select>
 						</div>
 					</div>
@@ -71,12 +67,16 @@
 							<span class="input-group-text" id="inputGroupFileAddon01">Image de l'article</span>
 						</div>
 						<div class="custom-file">
-							<input type="file" class="custom-file-input" id="articlefile" aria-describedby="inputGroupFileAddon01" name="articlefile" accept=".jpg, .jpeg, .png, .gif">
+							<input type="file" class="custom-file-input" id="articlefile"
+								   aria-describedby="inputGroupFileAddon01" name="articlefile"
+								   accept=".jpg, .jpeg, .png, .gif">
 							<label class="custom-file-label" for="inputGroupFile01">Choisir une
 								photo</label>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-md blue-gradient mt-3" style="margin-bottom: 10px">Enregistrer</button>
+					<button type="submit" class="btn btn-md blue-gradient mt-3" style="margin-bottom: 10px">
+						Enregistrer
+					</button>
 				</div>
 			</div>
 			</form>
