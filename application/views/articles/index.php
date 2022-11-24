@@ -28,20 +28,20 @@
 			</div>
 		</div>
 		<div class="row wow fadeIn">
-			<div class="col-md-12 mb-4">
+			<div class="col-md-12 col-sm-12 col-lg-12 mb-4">
 				<div class="card">
 					<div class="card-body">
 						<a style="float: right" class="btn btn-success btn-sm"
 						   href="<?php echo base_url() ?>articles/create">Ajouter</a>
-						<table id="dt-material-checkbox" class="table table-hover">
-							<thead class="blue-grey lighten-4">
-							<tr>
+						<table id="dt-material-checkbox" class="table table-hover w-100">
+							<thead>
+							<tr class="text-justify">
 								<th class="th-sm">Image</th>
 								<th class="th-sm">Désignation</th>
 								<th class="th-sm">Catégorie</th>
 								<th class="th-sm">Prix Unitaire</th>
 								<th class="th-sm">Quantité Stock</th>
-								<th class="th-sm"></th>
+								<th class="th-lg">Action</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -54,8 +54,7 @@
 									<td class="font-weight-bold"><?php echo ucfirst($row->designation) ?></td>
 									<td><?php echo ucfirst($row->nom_categorie) ?></td>
 									<td class="font-weight-bold"><?= $row->devise ?> <?= number_format($row->prix_unitaire, 2, ',', ' ') ?></td>
-									<td><?php echo ucfirst($row->qte_actuelle) ?></td>
-
+									<td><?= $row->qte_actuelle . " $row->unityName " ?> </td>
 
 									<td class="d-flex justify-content-between">
 										<a href="<?php echo base_url() ?>articles/entree/<?= $row->id_article ?>"
@@ -69,7 +68,8 @@
 
 										<a onclick="return confirm('Etes-vous sûr de supprimer cette commande ?');"
 										   class="btn-sm btn-outline-danger"
-										   href="<?php echo base_url() ?>articles/delete/<?= $row->id_article ?>"><i class="fa fa-trash-alt"></i></a>
+										   href="<?php echo base_url() ?>articles/delete/<?= $row->id_article ?>"><i
+													class="fa fa-trash-alt"></i></a>
 									</td>
 								</tr>
 							<?php endforeach; ?>

@@ -25,7 +25,7 @@ class Shopping_cart extends CI_Controller
 			"price" => $_POST['product_price'],
 			"unit_price" => $_POST['product_unit_price'],
 			"buy_price" => $_POST['product_price_buy'],
-			//"benefic" => $_POST['product_price'] - $_POST['product_price_buy'],
+			"unity" => $_POST['unity'],
 			"tva" => $tva,
 			"subtotal" => $_POST['product_unit_price'] * $_POST['quantity']
 		);
@@ -81,7 +81,14 @@ class Shopping_cart extends CI_Controller
             ';
 		$count = 0;
 		$total = 0;
+		$suffix = '' ;
 		foreach ($this->cart->contents() as $items) {
+
+			if($items['qty'] > 1 && $items['unity'] != 'Rouleau'){
+				$suffix = 's';
+			}elseif ($items['qty'] > 1 && $items['unity'] === 'Rouleau'){
+				$suffix = 'x';
+			}
 
 			$count++;
 			$output .= '
@@ -97,7 +104,7 @@ class Shopping_cart extends CI_Controller
                                     <div class="d-flex justify-content-between align-items-center w-100">
                                         <strong class="text-gray-dark">Quantité</strong>
                                     </div>
-                                    <span class="d-block">' . $items["qty"] . '</span>
+                                    <span class="d-block">' . $items["qty"] . " " . $items["unity"] . $suffix.'</span>
                                 </div>
 
                                 <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">

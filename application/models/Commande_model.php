@@ -52,6 +52,7 @@ class Commande_model extends CI_Model
 	function factureDetails($fact_token)
 	{
 		$this->db->join('lq_articles', 'lq_articles.id_article=lq_factures.id_article');
+		$this->db->join('lq_unities', 'lq_unities.unityId=lq_articles.unityId');
 		return $this->db->get_where("lq_factures", array('fact_token' => $fact_token))->result();
 
 	}
@@ -101,7 +102,8 @@ class Commande_model extends CI_Model
 		return $this->db->get('lq_retrieves')->result();
 	}
 
-	function cancelCommand($factToken, $data){
+	function cancelCommand($factToken, $data)
+	{
 		$this->db->where('fact_token', $factToken);
 		return $this->db->update('lq_factures', $data);
 	}

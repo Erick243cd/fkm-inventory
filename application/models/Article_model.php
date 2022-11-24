@@ -12,6 +12,7 @@ class Article_model extends CI_Model
 	{
 		$this->db->order_by('id_article', 'DESC');
 		$this->db->join('lq_categories', 'lq_articles.id_categorie=lq_categories.id_categorie');
+		$this->db->join('lq_unities', 'lq_articles.unityId=lq_unities.unityId');
 		$query = $this->db->get_where("lq_articles", array('lq_articles.deleted' => 'not'));
 		return $query->result();
 	}
@@ -19,6 +20,7 @@ class Article_model extends CI_Model
 	public function get_article_id($id)
 	{
 		$this->db->join('lq_categories', 'lq_articles.id_categorie=lq_categories.id_categorie');
+		$this->db->join('lq_unities', 'lq_articles.unityId=lq_unities.unityId');
 		$query = $this->db->get_where('lq_articles', array('id_article' => $id));
 		return $query->row_array();
 	}
@@ -33,6 +35,7 @@ class Article_model extends CI_Model
 			'qte_initial' => $this->input->post('qte_initial'),
 			'qte_actuelle' => $this->input->post('qte_initial'),
 			'id_categorie' => $this->input->post('id_categorie'),
+			'unityId' => $this->input->post('unity'),
 			'deleted' => 'not',
 			'image_article' => $file
 		);
@@ -66,6 +69,7 @@ class Article_model extends CI_Model
 	{
 		$this->db->order_by('id_reappro', 'DESC');
 		$this->db->join('lq_articles', 'lq_articles.id_article=lq_reappro.id_article');
+		$this->db->join('lq_unities', 'lq_articles.unityId=lq_unities.unityId');
 		$this->db->join('lq_quantites_entree', 'lq_quantites_entree.key_entree=lq_reappro.key_entree');
 		$query = $this->db->get("lq_reappro");
 		return $query->result();
@@ -83,6 +87,7 @@ class Article_model extends CI_Model
 		return true;
 	}
 
+
 	public function getQuantity($productId)
 	{
 
@@ -93,5 +98,10 @@ class Article_model extends CI_Model
 	{
 		$this->db->where('id_article', $productId);
 		return $this->db->update('lq_articles', $data);
+	}
+
+	public function getUnities()
+	{
+		return $this->db->get('lq_unities')->result();
 	}
 }

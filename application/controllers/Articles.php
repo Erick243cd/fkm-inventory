@@ -15,13 +15,17 @@ class Articles extends CI_Controller
 
 	public function create()
 	{
-		$data['title'] = 'Nouvel article';
-		$data['categories'] = $this->categorie_model->fetch();
+		$data = array(
+			'title' => 'Nouvel article',
+			'categories' => $this->categorie_model->fetch(),
+			'unities' => $this->article_model->getUnities()
+		);
 
 		//Validation de formulaire
 		$this->form_validation->set_rules('designation', 'Nom de l\'article', 'required');
 		$this->form_validation->set_rules('prix_unitaire', 'Prix unitaire', 'required|numeric');
 		$this->form_validation->set_rules('qte_initial', 'Quantité initiale', 'required|numeric');
+		$this->form_validation->set_rules('unity', 'Unité', 'required');
 
 		if ($this->form_validation->run() === FALSE) {
 			$this->load->view('dashboards/header');
@@ -51,10 +55,12 @@ class Articles extends CI_Controller
 
 	public function edit($id)
 	{
-		$data['categories'] = $this->categorie_model->fetch();
-		$data['article'] = $this->article_model->get_article_id($id);
-
-		$data['title'] = 'Editer l\'article';
+		$data = array(
+			'title' => 'Editer l\'article',
+			'categories' => $this->categorie_model->fetch(),
+			'unities' => $this->article_model->getUnities(),
+			'article' => $this->article_model->get_article_id($id)
+		);
 
 		$this->load->view('dashboards/header');
 		$this->load->view('articles/edit', $data);
@@ -64,13 +70,15 @@ class Articles extends CI_Controller
 	public function update()
 	{
 		$data = array(
-			'designation' => $this->input->post('designation'),
+			'designation' => htmlspecialchars($this->input->post('designation')),
 			'prix_unitaire' => $this->input->post('prix_unitaire'),
 			'devise' => $this->input->post('devise'),
 			'qte_initial' => $this->input->post('qte_initial'),
 			'qte_actuelle' => $this->input->post('qte_initial'),
 			'id_categorie' => $this->input->post('id_categorie'),
+			'unityId' => $this->input->post('unity'),
 		);
+
 		$this->article_model->update_article($data);
 		//Set Message
 		$this->session->set_flashdata('article_updated', 'Le produit a été modifié !');
@@ -87,9 +95,11 @@ class Articles extends CI_Controller
 
 	function entree($id)
 	{
-		$data['categories'] = $this->categorie_model->fetch();
-		$data['article'] = $this->article_model->get_article_id($id);
-		$data['title'] = 'Reapprovisonner l\'article';
+		$data = array(
+			'categories' => $this->categorie_model->fetch(),
+			'article' => $this->article_model->get_article_id($id),
+			'title' => 'Réapprovisionner l\'article'
+		);
 
 		$this->load->view('dashboards/header');
 		$this->load->view('entrees/entree', $data);
@@ -102,6 +112,9 @@ class Articles extends CI_Controller
 		/*
                 Quantité Sortie
             */
+		$session_data = $this->session->userdata('logged_in');
+		$userID = $session_data['id'];;
+
 		$key_entree_qte = rand(78452, 8569211);
 
 		$quantite_actuel = $this->input->post('qte_actuelle') + $this->input->post('qte_reappro');
@@ -111,8 +124,10 @@ class Articles extends CI_Controller
 			'qte_reappro' => $this->input->post('qte_reappro'),
 			'date_reappro' => $this->input->post('date_reappro'),
 			'nom_fournisseur' => $this->input->post('nom_fournisseur'),
-			'key_entree' => $key_entree_qte
+			'key_entree' => $key_entree_qte,
+			'userId' => $userID
 		);
+
 		$data_article = array(
 			'qte_actuelle' => $quantite_actuel
 		);
@@ -121,10 +136,9 @@ class Articles extends CI_Controller
 			'key_entree' => $key_entree_qte,
 			'qte_restante' => $quantite_actuel
 		);
-
 		$this->article_model->save_reappro($data_entree, $data_article, $data_qte_entree);
 		//Set Message
-		$this->session->set_flashdata('reapro_save', 'Le reapprovisonnement de l\'article a été bien enregistré !');
+		$this->session->set_flashdata('reapro_save', 'Le réapprovisionnement de l\'article a été bien enregistré !');
 		redirect('articles/entreelist');
 	}
 

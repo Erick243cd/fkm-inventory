@@ -19,9 +19,8 @@
 
 		<!--Grid row-->
 		<div class="row wow fadeIn">
-
 			<!--Grid column-->
-			<div class="col-md-12 mb-4">
+			<div class="col-md-12 mb-4 col-lg-12 col-sm-12">
 				<?php if ($this->session->flashdata('success')): ?>
 					<div class="alert alert-success alert-dismissible" role="alert" id="connexion-failed">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close" id="btn-close">
@@ -44,9 +43,9 @@
 					<!--Card content-->
 					<div class="card-body">
 						<!-- Table  -->
-						<table id="dt-material-checkbox" class="table table-striped table-hover" cellspacing="0"
-							   width="100%">
-							<a href="<?= base_url()?>shopping_cart" class="btn btn-success btn-sm float-right">Nouvelle facture</a>
+						<table id="dt-material-checkbox" class="table table-striped table-hover w-100">
+							<a href="<?= base_url() ?>shopping_cart" class="btn btn-success btn-sm float-right">Nouvelle
+								facture</a>
 							<!-- Table head -->
 							<thead class="blue-grey lighten-4">
 							<tr>
@@ -54,7 +53,6 @@
 								<th class="th-sm">Date</th>
 								<th class="th-sm">Client</th>
 								<th class="th-sm">Status</th>
-
 								<th class="th-sm"></th>
 							</tr>
 							</thead>

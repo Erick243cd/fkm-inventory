@@ -12,7 +12,9 @@
 			</div>
 		</div>
 		<div class="card fadeIn mb-4">
-			<?php echo validation_errors(); ?>
+			<div class="text-danger">
+				<?php echo validation_errors(); ?>
+			</div>
 			<div class="card-body">
 				<?php echo form_open_multipart('articles/create'); ?>
 				<div class="row">
@@ -48,35 +50,46 @@
 						<div class="md-form">
 							<select class="browser-default custom-select mdb-select" name="devise" required="required">
 								<option value="" disabled selected>Devise</option>
-<!--								<option value="CDF" selected>CDF</option>-->
+								<!--								<option value="CDF" selected>CDF</option>-->
 								<option value="USD" selected>USD</option>
 							</select>
 						</div>
 					</div>
-
-				</div>
-
-
-				<div class="md-form">
-					<label for="">Quantité initial</label>
-					<input type="number" class="form-control" name="qte_initial" required="required">
-				</div>
-				<div class="col-sm-12 mb-0">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="inputGroupFileAddon01">Image de l'article</span>
-						</div>
-						<div class="custom-file">
-							<input type="file" class="custom-file-input" id="articlefile"
-								   aria-describedby="inputGroupFileAddon01" name="articlefile"
-								   accept=".jpg, .jpeg, .png, .gif">
-							<label class="custom-file-label" for="inputGroupFile01">Choisir une
-								photo</label>
+					<div class="col-md-6 col-sm-6">
+						<div class="md-form">
+							<label for="">Quantité initial</label>
+							<input type="number" class="form-control" name="qte_initial" required="required">
 						</div>
 					</div>
-					<button type="submit" class="btn btn-md blue-gradient mt-3" style="margin-bottom: 10px">
-						Enregistrer
-					</button>
+					<div class="col-md-6 col-sm-6">
+						<div class="md-form">
+							<select class="browser-default custom-select mdb-select" name="unity" required="required">
+								<option value="" disabled>Unité</option>
+								<?php foreach ($unities as $unity): ?>
+									<option value="<?= $unity->unityId ?>"><?= $unity->unityName ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 mb-0">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="inputGroupFileAddon01">Image de l'article</span>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="articlefile"
+									   aria-describedby="inputGroupFileAddon01" name="articlefile"
+									   accept=".jpg, .jpeg, .png, .gif">
+								<label class="custom-file-label" for="inputGroupFile01">Choisir une
+									photo</label>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-md blue-gradient mt-3" style="margin-bottom: 10px">
+							Enregistrer
+						</button>
+					</div>
 				</div>
 			</div>
 			</form>

@@ -1,4 +1,4 @@
-<main class="pt-5 mx-lg-5">
+<main class="pt-5">
 	<div class="container-fluid mt-5">
 		<?php if ($this->session->flashdata('sortie_enable')) : ?>
 			<div class="alert alert-danger alert-dismissible" role="alert" id="connexion-failed">
@@ -49,7 +49,7 @@
 					<div class="col-md-4">
 						<div class="md-form">
 							<label for="" class="font-weight-bold text-danger">Quantité en stock</label>
-							<input disabled type="number" class="form-control" name="qte_initial" required="required" value="<?= $article['qte_actuelle'] ?>">
+							<input disabled type="text" class="form-control" name="qte_initial" required="required" value="<?= $article['qte_actuelle'] ." ". $article['unityName'] ?>">
 						</div>
 					</div>
 					<div class="col-md-4">

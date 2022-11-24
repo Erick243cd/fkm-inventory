@@ -21,12 +21,12 @@ class Sorties extends CI_Controller
 
 	function sortie($id)
 	{
-		$data = [
+		$data = array(
 			'categories' => $this->categorie_model->fetch(),
 			'article' => $this->article_model->get_article_id($id),
 			'title' => 'Enregistrer la sortie de l\'article',
 			'shops' => $this->categorie_model->getShops()
-		];
+		);
 
 		$this->load->view('dashboards/header');
 		$this->load->view('sorties/sortie', $data);
@@ -35,6 +35,9 @@ class Sorties extends CI_Controller
 
 	function save()
 	{
+		$session_data = $this->session->userdata('logged_in');
+		$userID = $session_data['id'];;
+
 		$quantite_initiale = $this->input->post('qte_initial');
 		$quantite_sortie = $this->input->post('qte_sortie');
 
@@ -54,8 +57,10 @@ class Sorties extends CI_Controller
 				'qte_sortie' => $this->input->post('qte_sortie'),
 				'date_sortie' => $this->input->post('date_sortie'),
 				'motif_sortie' => $this->input->post('motif_sortie'),
-				'key_sortie' => $key_sortie_qte
+				'key_sortie' => $key_sortie_qte,
+				'userId'=>$userID
 			);
+
 
 			$data_article = array(
 				'qte_actuelle' => $quantite_actuel

@@ -67,6 +67,8 @@
 			var product_price_buy = $(this).data("product_price_buy");//Prix d'achat
 			var quantity = $('#' + product_id).val();
 			var max_quantity = $(this).data("max_quantity");
+			var unity = $(this).data("unity");
+
 			var product_price = $('#sales_price' + product_id).val(); //Prix de vente
 
 			if (quantity != '' && quantity > 0) {
@@ -82,7 +84,8 @@
 							product_price: product_unit_price,
 							quantity: quantity,
 							product_unit_price: product_unit_price,
-							product_price_buy: product_price_buy
+							product_price_buy: product_price_buy,
+							unity:unity
 						},
 						success: function (data) {
 							//alert("Article ajouté à la facture");

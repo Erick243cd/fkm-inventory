@@ -24,7 +24,7 @@
 						<div class="card-body">
 							<a style="float: right" class="btn btn-success btn-sm"
 							   href="<?php echo base_url() ?>" data-toggle="modal" data-target="#quickview">Facture</a>
-							<table id="dt-material-checkbox" class="table table-striped" cellspacing="0" cellpadding="0"
+							<table id="dt-material-checkbox" class="table table-striped w-100"
 								   width="100%">
 								<thead>
 								<tr class="text-center">
@@ -32,7 +32,7 @@
 									<th class="th-sm"></th>
 									<th class="th-sm"></th>
 									<th class="th-sm"></th>
-									<th class="th-sm" style="float: right;"></th>
+									<th class="th-sm"></th>
 								</tr>
 								</thead>
 								<tbody>
@@ -41,7 +41,9 @@
 										<td class="font-weight-bold"><?php echo ucfirst($row->designation) ?>
 											( <?= number_format($row->prix_unitaire, 2, ',', '') ?> <?= $row->devise ?>)
 										</td>
-										<td><input type="text" disabled placeholder="Stock :<?= $row->qte_actuelle ?> " style="width:100px;" min="1" class="form-control quantity">
+										<td><input type="text" disabled
+												   placeholder="Stock :<?= ($row->qte_actuelle > 1 && $row->unityName != 'Rouleau') ? $row->qte_actuelle . " $row->unityName" . "s" : $row->qte_actuelle . " $row->unityName " ?> "
+												   min="1" class="form-control quantity">
 										</td>
 										<td class="">
 											<input type="number" placeholder="Quantité" style="width:100px;" min="1"
@@ -61,11 +63,11 @@
 													data-productid="<?= $row->id_article ?>"
 													data-product_price_buy="<?= $row->prix_achat ?>"
 													data-max_quantity="<?= $row->qte_actuelle ?>"
-											>
+													data-unity="<?= $row->unityName ?>">
 												<span class="fa fa-plus"></span>
 											</button>
 										</td>
-										<td style="float: right"> <?= $row->nom_categorie ?></td>
+										<td> <?= $row->nom_categorie ?></td>
 									</tr>
 								<?php endforeach; ?>
 								</tbody>
@@ -96,15 +98,18 @@
 							<div class="d-md-flex justify-content-center my-1 ml-3 mr-3 mt-0">
 								<div class="form-group ">
 									<label for="usd_amount">Réduction </label>
-									<input type="number" class="form-control" name="amount_reduction" step="any" value="0">
+									<input type="number" class="form-control" name="amount_reduction" step="any"
+										   value="0">
 								</div>
 								<div class="form-group">
 									<label for="usd_amount">Montant USD</label>
-									<input type="number" class="form-control" name="usd_amount" step="any" value="0" required>
+									<input type="number" class="form-control" name="usd_amount" step="any"
+										   required>
 								</div>
 								<div class="form-group">
 									<label for="cdf_amount">Montant CDF</label>
-									<input type="number" class="form-control" name="cdf_amount" step="any" value="0" required>
+									<input type="number" class="form-control" name="cdf_amount" step="any"
+										   required>
 								</div>
 								<div class="form-group">
 									<label for="cdf_amount">Nom du client</label>
@@ -117,8 +122,8 @@
 							</div>
 
 							<div class="modal-footer">
-								<a class="btn btn-default" data-dismiss="modal">Fermer</a>
-								<button type="submit" class="btn btn-primary"
+								<a class="btn btn-default btn-sm" data-dismiss="modal">Fermer</a>
+								<button type="submit" class="btn btn-primary btn-sm"
 										href="<?php echo base_url() ?>commandes/create">Enregistrer
 								</button>
 							</div>
