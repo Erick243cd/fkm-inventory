@@ -5,7 +5,6 @@ class Commandes extends CI_Controller
 
 	public function index($offset = 0)
 	{
-
 		$config['base_url'] = base_url() . 'commandes/index/';
 		$config['total_rows'] = $this->db->count_all('lq_factures');
 		$config['per_page'] = 300;
@@ -34,7 +33,8 @@ class Commandes extends CI_Controller
 		$usb_amount = htmlentities($this->input->post('usd_amount'));
 		$cdf_amount = htmlentities($this->input->post('cdf_amount'));
 		$client_name = htmlentities($this->input->post('client_name'));
-		$is_cash = $this->input->post('is_cash');
+		//$is_cash = $this->input->post('is_cash');
+		$is_tva = $this->input->post('is_tva');
 
 		//var_dump($this->cart->contents()); die();
 		if (!empty($this->cart->contents())) {
@@ -48,13 +48,13 @@ class Commandes extends CI_Controller
 					'remise' => $reduction,
 					'usd_amount' => $usb_amount,
 					'cdf_amount' => $cdf_amount,
-					'product_tva' => $items["tva"],
+					'product_tva' => isset($is_tva) ? $items['subtotal'] * 0.16 : $items['tva'],
 					'subtotal' => $items["subtotal"],
 					'fact_token' => $fact_token,
 					'client_token' => $client_token,
 					'client_name' => $client_name,
 					'date_facture' => date('Y-m-d'),
-					'is_cash' => isset($is_cash) ? $is_cash : 0,
+					'is_cash' => 1//isset($is_cash) ? $is_cash : 0,
 				);
 
 
@@ -100,7 +100,7 @@ class Commandes extends CI_Controller
 					'cdf_amount' => $cdf_amount);
 				$this->commande_model->insert_solde($data_solde);
 			}
-			redirect('commandes/factureDetail/'.$fact_token);
+			redirect('commandes/factureDetail/' . $fact_token);
 			//redirect('shopping_cart/destroy_cart');
 
 		} else {
@@ -151,7 +151,7 @@ class Commandes extends CI_Controller
 				$subtotal += $solde->subtotal;
 			}
 		}
-		$data =(object) array(
+		$data = (object)array(
 			'usd_amount' => $usd_amount,
 			'cdf_amount' => $cdf_amount,
 			'remise' => $remise_amount,

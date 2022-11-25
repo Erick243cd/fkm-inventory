@@ -23,7 +23,9 @@
 					<div class="card">
 						<div class="card-body">
 							<a style="float: right" class="btn btn-success btn-sm"
-							   href="<?php echo base_url() ?>" data-toggle="modal" data-target="#quickview">Facture</a>
+							   href="<?= base_url() ?>" data-toggle="modal" data-target="#quickview">Facture</a>
+							<a class="btn btn-primary btn-sm"
+							   href="<?= base_url('commandes') ?>">Liste des factures</a>
 							<table id="dt-material-checkbox" class="table table-striped w-100"
 								   width="100%">
 								<thead>
@@ -97,6 +99,7 @@
 
 							<div class="d-md-flex justify-content-center my-1 ml-3 mr-3 mt-0">
 								<div class="form-group ">
+
 									<label for="usd_amount">Réduction </label>
 									<input type="number" class="form-control" name="amount_reduction" step="any"
 										   value="0">
@@ -115,13 +118,12 @@
 									<label for="cdf_amount">Nom du client</label>
 									<input type="text" class="form-control" name="client_name" step="any">
 								</div>
-
-								<label>
-									Cash <input type="checkbox" name="is_cash" value="1" checked>
-								</label>
 							</div>
 
 							<div class="modal-footer">
+								<label class="text-danger">
+									AVEC TVA <input type="checkbox" name="is_tva" value="1">
+								</label>
 								<a class="btn btn-default btn-sm" data-dismiss="modal">Fermer</a>
 								<button type="submit" class="btn btn-primary btn-sm"
 										href="<?php echo base_url() ?>commandes/create">Enregistrer

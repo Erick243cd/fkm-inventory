@@ -79,14 +79,13 @@ class Commande_model extends CI_Model
 	function getSoldeStory($request)
 	{
 		if (isset($request)) {
-			$this->db->where('date_facture', $request);
+			$wheres = array('date_facture' => $request, 'is_canceled' => '0');
 		} else {
-			$this->db->where('date_facture', date('Y-m-d'));
+			$wheres = array('date_facture' => date('Y-m-d'), 'is_canceled' => '0');
 		}
-
-		$query = $this->db->query("SELECT  fact_token, remise, usd_amount, cdf_amount, subtotal FROM lq_factures GROUP BY fact_token");
-
-		return $query->result();
+		$this->db->select('is_canceled, fact_token, remise, usd_amount, cdf_amount, subtotal');
+		$this->db->group_by('fact_token');
+		return $this->db->get_where('lq_factures', $wheres)->result();
 	}
 
 
